@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/timer_provider.dart';
 import '../theme/theme_provider.dart';
 import '../theme/colors.dart';
+import '../theme/button_styles.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -12,6 +13,8 @@ class HomeScreen extends ConsumerWidget {
     final timerNotifier = ref.read(timerNotifierProvider.notifier);
     final currentTheme = ref.watch(themeNotifierProvider);
     final selectedTimer = ref.watch(selectedTimerProvider);
+    final fontFamily =
+        ref.watch(themeNotifierProvider.notifier).currentFontFamily;
 
     String getButtonText() {
       if (timerState.time == 0) {
@@ -32,136 +35,120 @@ class HomeScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title:
-            Text('pomodoro', style: Theme.of(context).textTheme.headlineLarge),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, color: Colors.grey[600]),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return SettingsScreen(
-                    pomodoroDuration: timerNotifier.pomodoroDuration,
-                    shortBreakDuration: timerNotifier.shortBreakDuration,
-                    longBreakDuration: timerNotifier.longBreakDuration,
-                    onPomodoroDurationChanged: (value) {
-                      timerNotifier.updatePomodoroDuration(value);
-                    },
-                    onShortBreakDurationChanged: (value) {
-                      timerNotifier.updateShortBreakDuration(value);
-                    },
-                    onLongBreakDurationChanged: (value) {
-                      timerNotifier.updateLongBreakDuration(value);
-                    },
-                    onColorChanged: (color) {
-                      ref
-                          .read(themeNotifierProvider.notifier)
-                          .setThemeColor(color);
-                    },
-                  );
-                },
-              );
-            },
-          ),
-        ],
-      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.darkBackground,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
-              child: ToggleButtons(
-                renderBorder: false,
+            Padding(
+              padding: const EdgeInsets.only(top: 80.0),
+              child: Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: selectedTimer == TimerType.pomodoro
-                          ? Theme.of(context).colorScheme.secondary
-                          : AppColors.darkBackground,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 8.0),
-                    child: Text('pomodoro',
-                        style: TextStyle(
-                          color: selectedTimer == TimerType.pomodoro
-                              ? currentTheme.scaffoldBackgroundColor
-                              : Colors.grey[600],
-                          fontFamily: 'KumbhSans',
-                          fontWeight: FontWeight.bold,
-                        )),
+                  Text(
+                    'pomodoro',
+                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                          fontFamily: fontFamily,
+                        ),
                   ),
+                  SizedBox(height: 50),
                   Container(
+                    height: AppButtonStyles.rowHeight,
+                    constraints:
+                        BoxConstraints(minWidth: AppButtonStyles.rowMinWidth),
                     decoration: BoxDecoration(
-                      color: selectedTimer == TimerType.shortBreak
-                          ? Theme.of(context).colorScheme.secondary
-                          : AppColors.darkBackground,
-                      borderRadius: BorderRadius.circular(24),
+                      color: AppColors.darkBackground,
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 8.0),
-                    child: Text('short break',
-                        style: TextStyle(
-                          color: selectedTimer == TimerType.shortBreak
-                              ? currentTheme.scaffoldBackgroundColor
-                              : Colors.grey[600],
-                          fontFamily: 'KumbhSans',
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: selectedTimer == TimerType.longBreak
-                          ? Theme.of(context).colorScheme.secondary
-                          : AppColors.darkBackground,
-                      borderRadius: BorderRadius.circular(24),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                    child: ToggleButtons(
+                      renderBorder: false,
+                      children: [
+                        Container(
+                          width: AppButtonStyles.buttonWidth,
+                          height: AppButtonStyles.buttonHeight,
+                          decoration: BoxDecoration(
+                            color: selectedTimer == TimerType.pomodoro
+                                ? Theme.of(context).colorScheme.secondary
+                                : AppColors.darkBackground,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text('pomodoro',
+                              style: TextStyle(
+                                color: selectedTimer == TimerType.pomodoro
+                                    ? currentTheme.scaffoldBackgroundColor
+                                    : Colors.grey[600],
+                                fontFamily: fontFamily,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                        Container(
+                          width: AppButtonStyles.buttonWidth,
+                          height: AppButtonStyles.buttonHeight,
+                          decoration: BoxDecoration(
+                            color: selectedTimer == TimerType.shortBreak
+                                ? Theme.of(context).colorScheme.secondary
+                                : AppColors.darkBackground,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text('short break',
+                              style: TextStyle(
+                                color: selectedTimer == TimerType.shortBreak
+                                    ? currentTheme.scaffoldBackgroundColor
+                                    : Colors.grey[600],
+                                fontFamily: fontFamily,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                        Container(
+                          width: AppButtonStyles.buttonWidth,
+                          height: AppButtonStyles.buttonHeight,
+                          decoration: BoxDecoration(
+                            color: selectedTimer == TimerType.longBreak
+                                ? Theme.of(context).colorScheme.secondary
+                                : AppColors.darkBackground,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text('long break',
+                              style: TextStyle(
+                                color: selectedTimer == TimerType.longBreak
+                                    ? currentTheme.scaffoldBackgroundColor
+                                    : Colors.grey[600],
+                                fontFamily: fontFamily,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ],
+                      isSelected: [
+                        selectedTimer == TimerType.pomodoro,
+                        selectedTimer == TimerType.shortBreak,
+                        selectedTimer == TimerType.longBreak,
+                      ],
+                      onPressed: (int index) {
+                        if (index == 0) {
+                          timerNotifier.setPomodoro();
+                        } else if (index == 1) {
+                          timerNotifier.setShortBreak();
+                        } else if (index == 2) {
+                          timerNotifier.setLongBreak();
+                        }
+                        ref.read(selectedTimerProvider.notifier).state =
+                            TimerType.values[index];
+                      },
+                      color: Colors.white,
+                      selectedColor: currentTheme.colorScheme.secondary,
+                      fillColor: Colors.transparent,
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 8.0),
-                    child: Text('long break',
-                        style: TextStyle(
-                          color: selectedTimer == TimerType.longBreak
-                              ? currentTheme.scaffoldBackgroundColor
-                              : Colors.grey[600],
-                          fontFamily: 'KumbhSans',
-                          fontWeight: FontWeight.bold,
-                        )),
                   ),
                 ],
-                isSelected: [
-                  selectedTimer == TimerType.pomodoro,
-                  selectedTimer == TimerType.shortBreak,
-                  selectedTimer == TimerType.longBreak,
-                ],
-                onPressed: (int index) {
-                  if (index == 0) {
-                    timerNotifier.setPomodoro();
-                  } else if (index == 1) {
-                    timerNotifier.setShortBreak();
-                  } else if (index == 2) {
-                    timerNotifier.setLongBreak();
-                  }
-                  ref.read(selectedTimerProvider.notifier).state =
-                      TimerType.values[index];
-                },
-                color: Colors.white,
-                selectedColor: currentTheme.colorScheme.secondary,
-                fillColor: Colors.transparent,
               ),
             ),
-            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 if (timerState.time == 0) {
-                  handleRestart(); // Restart the timer to the selected duration
+                  handleRestart();
                 } else if (timerState.isRunning) {
                   timerNotifier.stopTimer();
                 } else {
@@ -169,14 +156,14 @@ class HomeScreen extends ConsumerWidget {
                 }
               },
               child: Container(
-                width: 300,
-                height: 300,
+                width: 410,
+                height: 410,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 250,
-                      height: 250,
+                      width: 339,
+                      height: 339,
                       child: CircularProgressIndicator(
                         value: (timerState.time /
                                 (selectedTimer == TimerType.pomodoro
@@ -195,17 +182,24 @@ class HomeScreen extends ConsumerWidget {
                         Text(
                           '${(timerState.time / 60).floor().toString().padLeft(2, '0')}:${(timerState.time % 60).toString().padLeft(2, '0')}',
                           style: TextStyle(
-                              fontSize: 48,
-                              fontFamily: 'RobotoSlab',
-                              color: Colors.white),
+                              fontSize: 100,
+                              fontFamily: fontFamily,
+                              color: Color(0xFFD7E0FF),
+                              fontWeight: FontWeight.bold,
+                              height: 1.2,
+                              letterSpacing: -5),
                         ),
                         SizedBox(height: 10),
                         Text(
                           getButtonText(),
                           style: TextStyle(
-                              fontSize: 24,
-                              fontFamily: 'RobotoSlab',
-                              color: Colors.white),
+                              fontSize: 16,
+                              fontFamily: fontFamily,
+                              color: Color(0xFFD7E0FF),
+                              fontWeight: FontWeight.bold,
+                              height: 1.2,
+                              letterSpacing: 15,
+                              textBaseline: TextBaseline.alphabetic),
                         ),
                       ],
                     ),
@@ -213,35 +207,42 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            IconButton(
-              icon: Icon(Icons.settings, color: Colors.grey[600]),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SettingsScreen(
-                      pomodoroDuration: timerNotifier.pomodoroDuration,
-                      shortBreakDuration: timerNotifier.shortBreakDuration,
-                      longBreakDuration: timerNotifier.longBreakDuration,
-                      onPomodoroDurationChanged: (value) {
-                        timerNotifier.updatePomodoroDuration(value);
-                      },
-                      onShortBreakDurationChanged: (value) {
-                        timerNotifier.updateShortBreakDuration(value);
-                      },
-                      onLongBreakDurationChanged: (value) {
-                        timerNotifier.updateLongBreakDuration(value);
-                      },
-                      onColorChanged: (color) {
-                        ref
-                            .read(themeNotifierProvider.notifier)
-                            .setThemeColor(color);
-                      },
-                    );
-                  },
-                );
-              },
+            Padding(
+              padding: const EdgeInsets.only(bottom: 80.0),
+              child: IconButton(
+                icon: Icon(Icons.settings, color: Colors.grey[600], size: 28),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SettingsScreen(
+                        pomodoroDuration: timerNotifier.pomodoroDuration,
+                        shortBreakDuration: timerNotifier.shortBreakDuration,
+                        longBreakDuration: timerNotifier.longBreakDuration,
+                        onPomodoroDurationChanged: (value) {
+                          timerNotifier.updatePomodoroDuration(value);
+                        },
+                        onShortBreakDurationChanged: (value) {
+                          timerNotifier.updateShortBreakDuration(value);
+                        },
+                        onLongBreakDurationChanged: (value) {
+                          timerNotifier.updateLongBreakDuration(value);
+                        },
+                        onColorChanged: (color) {
+                          ref
+                              .read(themeNotifierProvider.notifier)
+                              .setThemeColor(color);
+                        },
+                        onFontChanged: (fontFamily) {
+                          ref
+                              .read(themeNotifierProvider.notifier)
+                              .setFontFamily(fontFamily);
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

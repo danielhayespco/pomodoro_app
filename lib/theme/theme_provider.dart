@@ -7,6 +7,9 @@ import 'button_styles.dart';
 class ThemeNotifier extends StateNotifier<ThemeData> {
   ThemeNotifier() : super(_darkTheme);
 
+  String _fontFamily = 'KumbhSans';
+  Color _selectedColor = AppColors.primary;
+
   static final ThemeData _darkTheme = ThemeData(
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Colors.deepPurple,
@@ -15,10 +18,11 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
       background: AppColors.background,
     ),
     textTheme: TextTheme(
-      bodyLarge: AppTextStyles.bodyLarge,
-      bodyMedium: AppTextStyles.bodyMedium,
-      headlineLarge: AppTextStyles.headlineLarge,
-      labelLarge: AppTextStyles.labelLarge,
+      bodyLarge: AppTextStyles.body1,
+      bodyMedium: AppTextStyles.body2,
+      headlineLarge: AppTextStyles.h2,
+      headlineMedium: AppTextStyles.h3,
+      headlineSmall: AppTextStyles.h4,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: AppButtonStyles.elevatedButtonStyle(AppColors.primary),
@@ -27,27 +31,39 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
   );
 
   void setThemeColor(Color color) {
+    _selectedColor = color;
+    _updateTheme();
+  }
+
+  void setFontFamily(String fontFamily) {
+    _fontFamily = fontFamily;
+    _updateTheme();
+  }
+
+  void _updateTheme() {
     state = ThemeData(
       colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: generateMaterialColor(color),
+        primarySwatch: generateMaterialColor(_selectedColor),
       ).copyWith(
-        secondary: color,
+        secondary: _selectedColor,
         background: AppColors.background,
       ),
       textTheme: TextTheme(
-        bodyLarge: AppTextStyles.bodyLarge,
-        bodyMedium: AppTextStyles.bodyMedium,
-        headlineLarge: AppTextStyles.headlineLarge,
-        labelLarge: AppTextStyles.labelLarge,
+        bodyLarge: AppTextStyles.body1.copyWith(fontFamily: _fontFamily),
+        bodyMedium: AppTextStyles.body2.copyWith(fontFamily: _fontFamily),
+        headlineLarge: AppTextStyles.h2.copyWith(fontFamily: _fontFamily),
+        headlineMedium: AppTextStyles.h3.copyWith(fontFamily: _fontFamily),
+        headlineSmall: AppTextStyles.h4.copyWith(fontFamily: _fontFamily),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: AppButtonStyles.elevatedButtonStyle(color),
+        style: AppButtonStyles.elevatedButtonStyle(_selectedColor),
       ),
       scaffoldBackgroundColor: AppColors.background,
     );
   }
 
   Color get currentColor => state.colorScheme.secondary;
+  String get currentFontFamily => _fontFamily;
 }
 
 MaterialColor generateMaterialColor(Color color) {

@@ -4,10 +4,13 @@ class AppButtonStyles {
   static ButtonStyle elevatedButtonStyle(Color color) {
     return ElevatedButton.styleFrom(
       backgroundColor: color,
-      textStyle: TextStyle(color: Colors.white, fontFamily: 'RobotoSlab'),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
+      textStyle: TextStyle(fontWeight: FontWeight.bold),
     );
   }
+
+  static const double buttonHeight = 48.0;
+  static const double buttonWidth = 120.0;
+
+  static const double rowHeight = 63.0;
+  static const double rowMinWidth = 373.0;
 }

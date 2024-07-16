@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'colors.dart';
 import 'text_styles.dart';
-import 'button_styles.dart';
 
 final ThemeData appTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch(
     primarySwatch: Colors.deepPurple,
   ).copyWith(
-    secondary: AppColors.primary,
-    background: AppColors.background,
+    secondary: const Color(0xFFF87070),
+    background: const Color(0xFF1E213F),
   ),
   textTheme: TextTheme(
-    bodyLarge: AppTextStyles.bodyLarge,
-    bodyMedium: AppTextStyles.bodyMedium,
-    headlineLarge: AppTextStyles.headlineLarge,
-    labelLarge: AppTextStyles.labelLarge,
+    bodyLarge: AppTextStyles.body1,
+    bodyMedium: AppTextStyles.body2,
+    headlineLarge: AppTextStyles.h2,
+    headlineMedium: AppTextStyles.h3,
+    headlineSmall: AppTextStyles.h4,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: AppButtonStyles.elevatedButtonStyle(AppColors.primary),
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFFF87070),
+      textStyle: AppTextStyles.body1,
+    ),
   ),
-  scaffoldBackgroundColor: AppColors.background,
+  scaffoldBackgroundColor: const Color(0xFF1E213F),
 );
