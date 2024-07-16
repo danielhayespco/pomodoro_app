@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../timer_provider.dart';
-import '../theme_provider.dart';
+import '../providers/timer_provider.dart';
+import '../theme/theme_provider.dart';
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
+import '../theme/button_styles.dart';
 
 class SettingsScreen extends ConsumerWidget {
   final int pomodoroDuration;
@@ -144,12 +147,8 @@ class SettingsScreen extends ConsumerWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                  ),
+                  style: AppButtonStyles.elevatedButtonStyle(
+                      currentTheme.colorScheme.secondary),
                   child: Text('Apply', style: TextStyle(color: Colors.white)),
                 ),
               ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../timer_provider.dart';
-import '../theme_provider.dart';
+import '../providers/timer_provider.dart';
+import '../theme/theme_provider.dart';
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -14,9 +16,8 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('pomodoro', style: Theme.of(context).textTheme.headlineLarge),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text('pomodoro', style: currentTheme.textTheme.headlineLarge),
+        backgroundColor: currentTheme.colorScheme.background,
         actions: [
           IconButton(
             icon: Icon(Icons.settings, color: Colors.grey[600]),
@@ -55,7 +56,7 @@ class HomeScreen extends ConsumerWidget {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                color: Color(0xFF161932),
+                color: AppColors.darkBackground,
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
@@ -65,8 +66,8 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: selectedTimer == TimerType.pomodoro
-                          ? Theme.of(context).colorScheme.secondary
-                          : Color(0xFF161932),
+                          ? currentTheme.colorScheme.secondary
+                          : AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -74,7 +75,7 @@ class HomeScreen extends ConsumerWidget {
                     child: Text('pomodoro',
                         style: TextStyle(
                           color: selectedTimer == TimerType.pomodoro
-                              ? Theme.of(context).scaffoldBackgroundColor
+                              ? currentTheme.scaffoldBackgroundColor
                               : Colors.grey[600],
                           fontFamily: 'KumbhSans',
                           fontWeight: FontWeight.bold,
@@ -83,8 +84,8 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: selectedTimer == TimerType.shortBreak
-                          ? Theme.of(context).colorScheme.secondary
-                          : Color(0xFF161932),
+                          ? currentTheme.colorScheme.secondary
+                          : AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -92,7 +93,7 @@ class HomeScreen extends ConsumerWidget {
                     child: Text('short break',
                         style: TextStyle(
                           color: selectedTimer == TimerType.shortBreak
-                              ? Theme.of(context).scaffoldBackgroundColor
+                              ? currentTheme.scaffoldBackgroundColor
                               : Colors.grey[600],
                           fontFamily: 'KumbhSans',
                           fontWeight: FontWeight.bold,
@@ -101,8 +102,8 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: selectedTimer == TimerType.longBreak
-                          ? Theme.of(context).colorScheme.secondary
-                          : Color(0xFF161932),
+                          ? currentTheme.colorScheme.secondary
+                          : AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(
@@ -110,7 +111,7 @@ class HomeScreen extends ConsumerWidget {
                     child: Text('long break',
                         style: TextStyle(
                           color: selectedTimer == TimerType.longBreak
-                              ? Theme.of(context).scaffoldBackgroundColor
+                              ? currentTheme.scaffoldBackgroundColor
                               : Colors.grey[600],
                           fontFamily: 'KumbhSans',
                           fontWeight: FontWeight.bold,

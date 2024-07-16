@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/home_screen.dart';
-import 'theme_provider.dart';
+import 'theme/theme_provider.dart';
 
 void main() {
   runApp(ProviderScope(child: PomodoroApp()));

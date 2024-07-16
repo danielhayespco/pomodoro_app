@@ -79,10 +79,10 @@ flutter:
   fonts:
     - family: KumbhSans
       fonts:
-        - asset: fonts/KumbhSans-Regular.ttf
+        - asset: assets/fonts/KumbhSans-Regular.ttf
     - family: RobotoSlab
       fonts:
-        - asset: fonts/RobotoSlab-Regular.ttf
+        - asset: assets/fonts/RobotoSlab-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
