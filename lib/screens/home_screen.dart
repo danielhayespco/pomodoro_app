@@ -3,21 +3,39 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/timer_provider.dart';
 import '../theme/theme_provider.dart';
 import '../theme/colors.dart';
-import '../theme/text_styles.dart';
 import 'settings_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pomodoroTimer = ref.watch(timerNotifierProvider);
+    final timerState = ref.watch(timerNotifierProvider);
     final timerNotifier = ref.read(timerNotifierProvider.notifier);
     final currentTheme = ref.watch(themeNotifierProvider);
     final selectedTimer = ref.watch(selectedTimerProvider);
 
+    String getButtonText() {
+      if (timerState.time == 0) {
+        return 'RESTART';
+      } else {
+        return timerState.isRunning ? 'PAUSE' : 'START';
+      }
+    }
+
+    void handleRestart() {
+      if (selectedTimer == TimerType.pomodoro) {
+        timerNotifier.setPomodoro();
+      } else if (selectedTimer == TimerType.shortBreak) {
+        timerNotifier.setShortBreak();
+      } else if (selectedTimer == TimerType.longBreak) {
+        timerNotifier.setLongBreak();
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('pomodoro', style: currentTheme.textTheme.headlineLarge),
-        backgroundColor: currentTheme.colorScheme.background,
+        title:
+            Text('pomodoro', style: Theme.of(context).textTheme.headlineLarge),
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
           IconButton(
             icon: Icon(Icons.settings, color: Colors.grey[600]),
@@ -66,7 +84,7 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: selectedTimer == TimerType.pomodoro
-                          ? currentTheme.colorScheme.secondary
+                          ? Theme.of(context).colorScheme.secondary
                           : AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(24),
                     ),
@@ -84,7 +102,7 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: selectedTimer == TimerType.shortBreak
-                          ? currentTheme.colorScheme.secondary
+                          ? Theme.of(context).colorScheme.secondary
                           : AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(24),
                     ),
@@ -102,7 +120,7 @@ class HomeScreen extends ConsumerWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: selectedTimer == TimerType.longBreak
-                          ? currentTheme.colorScheme.secondary
+                          ? Theme.of(context).colorScheme.secondary
                           : AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(24),
                     ),
@@ -142,7 +160,9 @@ class HomeScreen extends ConsumerWidget {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                if (timerNotifier.isRunning) {
+                if (timerState.time == 0) {
+                  handleRestart(); // Restart the timer to the selected duration
+                } else if (timerState.isRunning) {
                   timerNotifier.stopTimer();
                 } else {
                   timerNotifier.startTimer();
@@ -158,7 +178,7 @@ class HomeScreen extends ConsumerWidget {
                       width: 250,
                       height: 250,
                       child: CircularProgressIndicator(
-                        value: (pomodoroTimer /
+                        value: (timerState.time /
                                 (selectedTimer == TimerType.pomodoro
                                     ? timerNotifier.pomodoroDuration
                                     : selectedTimer == TimerType.shortBreak
@@ -173,7 +193,7 @@ class HomeScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${(pomodoroTimer / 60).floor().toString().padLeft(2, '0')}:${(pomodoroTimer % 60).toString().padLeft(2, '0')}',
+                          '${(timerState.time / 60).floor().toString().padLeft(2, '0')}:${(timerState.time % 60).toString().padLeft(2, '0')}',
                           style: TextStyle(
                               fontSize: 48,
                               fontFamily: 'RobotoSlab',
@@ -181,7 +201,7 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          timerNotifier.isRunning ? 'PAUSE' : 'START',
+                          getButtonText(),
                           style: TextStyle(
                               fontSize: 24,
                               fontFamily: 'RobotoSlab',
