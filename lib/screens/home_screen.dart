@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:ui';
 import '../providers/timer_provider.dart';
 import '../theme/theme_provider.dart';
 import '../theme/colors.dart';
@@ -40,14 +41,18 @@ class HomeScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 80.0),
+              padding: const EdgeInsets.only(top: 75.0),
               child: Column(
                 children: [
                   Text(
                     'pomodoro',
-                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                          fontFamily: fontFamily,
-                        ),
+                    style: TextStyle(
+                      fontFamily: 'KumbhSans',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28, // Use the same font size as headlineLarge
+                      color: Color(
+                          0xFFD7E0FF), // Use the same color as headlineLarge
+                    ),
                   ),
                   SizedBox(height: 50),
                   Container(
@@ -77,7 +82,7 @@ class HomeScreen extends ConsumerWidget {
                               style: TextStyle(
                                 color: selectedTimer == TimerType.pomodoro
                                     ? currentTheme.scaffoldBackgroundColor
-                                    : Colors.grey[600],
+                                    : Color(0xFFD7E0FF).withOpacity(.45),
                                 fontFamily: fontFamily,
                                 fontWeight: FontWeight.bold,
                               )),
@@ -96,7 +101,7 @@ class HomeScreen extends ConsumerWidget {
                               style: TextStyle(
                                 color: selectedTimer == TimerType.shortBreak
                                     ? currentTheme.scaffoldBackgroundColor
-                                    : Colors.grey[600],
+                                    : Color(0xFFD7E0FF).withOpacity(.45),
                                 fontFamily: fontFamily,
                                 fontWeight: FontWeight.bold,
                               )),
@@ -115,7 +120,7 @@ class HomeScreen extends ConsumerWidget {
                               style: TextStyle(
                                 color: selectedTimer == TimerType.longBreak
                                     ? currentTheme.scaffoldBackgroundColor
-                                    : Colors.grey[600],
+                                    : Color(0xFFD7E0FF).withOpacity(.45),
                                 fontFamily: fontFamily,
                                 fontWeight: FontWeight.bold,
                               )),
@@ -161,6 +166,53 @@ class HomeScreen extends ConsumerWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
+                    Container(
+                      width: 410,
+                      height: 410,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xFF0E112A), // Darker color
+                            Color(0xFF2E325A), // Lighter color
+                          ],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF2E325A).withOpacity(0.5),
+                            offset: Offset(-6, -6),
+                            blurRadius: 15,
+                          ),
+                          BoxShadow(
+                            color: Color(0xFF0E112A).withOpacity(0.5),
+                            offset: Offset(6, 6),
+                            blurRadius: 15,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 366,
+                      height: 366,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.darkBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF0E112A).withOpacity(0.5),
+                            offset: Offset(-4, -4),
+                            blurRadius: 10,
+                          ),
+                          BoxShadow(
+                            color: Color(0xFF2E325A).withOpacity(0.5),
+                            offset: Offset(4, 4),
+                            blurRadius: 10,
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       width: 339,
                       height: 339,
@@ -210,7 +262,8 @@ class HomeScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 80.0),
               child: IconButton(
-                icon: Icon(Icons.settings, color: Colors.grey[600], size: 28),
+                icon: Icon(Icons.settings,
+                    color: Color(0xFFD7E0FF).withOpacity(.45), size: 34),
                 onPressed: () {
                   showDialog(
                     context: context,

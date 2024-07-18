@@ -8,24 +8,24 @@ class ThemeNotifier extends StateNotifier<ThemeData> {
   ThemeNotifier() : super(_darkTheme);
 
   String _fontFamily = 'KumbhSans';
-  Color _selectedColor = AppColors.primary;
+  Color _selectedColor = const Color(0xFFF87070);
 
   static final ThemeData _darkTheme = ThemeData(
     colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.deepPurple,
+      primarySwatch: generateMaterialColor(const Color(0xFFF87070)),
     ).copyWith(
-      secondary: AppColors.primary,
+      secondary: const Color(0xFFF87070),
       background: AppColors.background,
     ),
     textTheme: TextTheme(
-      bodyLarge: AppTextStyles.body1,
-      bodyMedium: AppTextStyles.body2,
-      headlineLarge: AppTextStyles.h2,
-      headlineMedium: AppTextStyles.h3,
-      headlineSmall: AppTextStyles.h4,
+      bodyLarge: AppTextStyles.body1.copyWith(fontFamily: 'KumbhSans'),
+      bodyMedium: AppTextStyles.body2.copyWith(fontFamily: 'KumbhSans'),
+      headlineLarge: AppTextStyles.h2.copyWith(fontFamily: 'KumbhSans'),
+      headlineMedium: AppTextStyles.h3.copyWith(fontFamily: 'KumbhSans'),
+      headlineSmall: AppTextStyles.h4.copyWith(fontFamily: 'KumbhSans'),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: AppButtonStyles.elevatedButtonStyle(AppColors.primary),
+      style: AppButtonStyles.elevatedButtonStyle(const Color(0xFFF87070)),
     ),
     scaffoldBackgroundColor: AppColors.background,
   );

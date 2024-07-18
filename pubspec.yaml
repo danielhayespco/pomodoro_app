@@ -83,6 +83,9 @@ flutter:
     - family: RobotoSlab
       fonts:
         - asset: assets/fonts/RobotoSlab-Regular.ttf
+    - family: SpaceMono
+      fonts:
+        - asset: assets/fonts/SpaceMono-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
