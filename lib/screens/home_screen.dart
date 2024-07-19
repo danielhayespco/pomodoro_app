@@ -49,9 +49,8 @@ class HomeScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontFamily: 'KumbhSans',
                       fontWeight: FontWeight.bold,
-                      fontSize: 28, // Use the same font size as headlineLarge
-                      color: Color(
-                          0xFFD7E0FF), // Use the same color as headlineLarge
+                      fontSize: 28,
+                      color: Color(0xFFD7E0FF),
                     ),
                   ),
                   SizedBox(height: 50),
@@ -175,8 +174,8 @@ class HomeScreen extends ConsumerWidget {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            Color(0xFF0E112A), // Darker color
-                            Color(0xFF2E325A), // Lighter color
+                            Color(0xFF0E112A),
+                            Color(0xFF2E325A),
                           ],
                         ),
                         boxShadow: [
