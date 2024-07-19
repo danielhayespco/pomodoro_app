@@ -187,14 +187,18 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xFF2E325A).withOpacity(0.5),
-                            offset: Offset(-6, -6),
-                            blurRadius: 15,
+                            color: Color(0xFF2E325A).withOpacity(
+                                0.8), // Increased opacity for more presence
+                            offset: Offset(-25,
+                                -25), // Increased offset for more dramatic effect
+                            blurRadius: 30, // Increased blur radius
                           ),
                           BoxShadow(
-                            color: Color(0xFF0E112A).withOpacity(0.5),
-                            offset: Offset(6, 6),
-                            blurRadius: 15,
+                            color: Color(0xFF0E112A).withOpacity(
+                                0.7), // Increased opacity for more presence
+                            offset: Offset(10,
+                                10), // Increased offset for more dramatic effect
+                            blurRadius: 30, // Increased blur radius
                           ),
                         ],
                       ),
@@ -207,14 +211,18 @@ class HomeScreen extends ConsumerWidget {
                         color: AppColors.darkBackground,
                         boxShadow: [
                           BoxShadow(
-                            color: Color(0xFF0E112A).withOpacity(0.5),
-                            offset: Offset(-4, -4),
-                            blurRadius: 10,
+                            color: Color(0xFF0E112A).withOpacity(
+                                0.7), // Increased opacity for more presence
+                            offset: Offset(-8,
+                                -8), // Increased offset for more dramatic effect
+                            blurRadius: 25, // Increased blur radius
                           ),
                           BoxShadow(
-                            color: Color(0xFF2E325A).withOpacity(0.5),
-                            offset: Offset(4, 4),
-                            blurRadius: 10,
+                            color: Color(0xFF2E325A).withOpacity(
+                                0.7), // Increased opacity for more presence
+                            offset: Offset(8,
+                                8), // Increased offset for more dramatic effect
+                            blurRadius: 30, // Increased blur radius
                           ),
                         ],
                       ),
@@ -278,15 +286,6 @@ class HomeScreen extends ConsumerWidget {
                         pomodoroDuration: timerNotifier.pomodoroDuration,
                         shortBreakDuration: timerNotifier.shortBreakDuration,
                         longBreakDuration: timerNotifier.longBreakDuration,
-                        onPomodoroDurationChanged: (value) {
-                          timerNotifier.updatePomodoroDuration(value);
-                        },
-                        onShortBreakDurationChanged: (value) {
-                          timerNotifier.updateShortBreakDuration(value);
-                        },
-                        onLongBreakDurationChanged: (value) {
-                          timerNotifier.updateLongBreakDuration(value);
-                        },
                         onColorChanged: (color) {
                           ref
                               .read(themeNotifierProvider.notifier)

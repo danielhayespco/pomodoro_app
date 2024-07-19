@@ -11,11 +11,15 @@ class TimerState {
 }
 
 class TimerNotifier extends StateNotifier<TimerState> {
-  TimerNotifier() : super(TimerState(time: 25 * 60, isRunning: false));
+  TimerNotifier(this._read)
+      : super(TimerState(time: 25 * 60, isRunning: false));
+  final Reader _read;
   Timer? _timer;
   int pomodoroDuration = 25;
   int shortBreakDuration = 5;
   int longBreakDuration = 15;
+
+  TimerType get selectedTimer => _read(selectedTimerProvider);
 
   void startTimer() {
     _timer?.cancel();
@@ -52,14 +56,23 @@ class TimerNotifier extends StateNotifier<TimerState> {
 
   void updatePomodoroDuration(int duration) {
     pomodoroDuration = duration;
+    if (selectedTimer == TimerType.pomodoro) {
+      setPomodoro();
+    }
   }
 
   void updateShortBreakDuration(int duration) {
     shortBreakDuration = duration;
+    if (selectedTimer == TimerType.shortBreak) {
+      setShortBreak();
+    }
   }
 
   void updateLongBreakDuration(int duration) {
     longBreakDuration = duration;
+    if (selectedTimer == TimerType.longBreak) {
+      setLongBreak();
+    }
   }
 
   @override
@@ -71,7 +84,7 @@ class TimerNotifier extends StateNotifier<TimerState> {
 
 final timerNotifierProvider =
     StateNotifierProvider<TimerNotifier, TimerState>((ref) {
-  return TimerNotifier();
+  return TimerNotifier(ref.read);
 });
 
 class SelectedTimerNotifier extends StateNotifier<TimerType> {
