@@ -48,7 +48,7 @@ class SettingsScreen extends ConsumerWidget {
       backgroundColor: Colors.white,
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: isMobile ? 549 : 464,
+          minHeight: isMobile ? 549 : 464,
         ),
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -59,7 +59,8 @@ class SettingsScreen extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.small),
                 constraints: BoxConstraints(
-                  maxWidth: isMobile ? 327 : 540,
+                  minWidth: isMobile ? 327 : 540,
+                  maxWidth: isMobile ? 335 : 540,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -69,7 +70,11 @@ class SettingsScreen extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(AppSpacing.medium),
+                          padding: isMobile
+                              ? EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.smedium,
+                                  vertical: AppSpacing.medium)
+                              : EdgeInsets.all(AppSpacing.medium),
                           child: Text(
                             'Settings',
                             style:
@@ -91,7 +96,7 @@ class SettingsScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    isMobile ? SizedBox(height: 3) : SizedBox(height: 10),
+                    SizedBox(height: 10),
                     FractionallySizedBox(
                       widthFactor: 1,
                       child: Container(
