@@ -12,5 +12,5 @@ class AppButtonStyles {
   static const double buttonWidth = 120.0;
 
   static const double rowHeight = 63.0;
-  static const double rowMinWidth = 373.0;
+  static const double rowMinWidth = 327.0;
 }

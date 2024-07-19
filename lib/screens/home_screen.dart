@@ -17,6 +17,8 @@ class HomeScreen extends ConsumerWidget {
     final fontFamily =
         ref.watch(themeNotifierProvider.notifier).currentFontFamily;
 
+    final bool isMobile = MediaQuery.of(context).size.width < 600;
+
     String getButtonText() {
       if (timerState.time == 0) {
         return 'RESTART';
@@ -41,7 +43,7 @@ class HomeScreen extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 75.0),
+              padding: EdgeInsets.only(top: isMobile ? 24.0 : 75.0),
               child: Column(
                 children: [
                   Text(
@@ -49,27 +51,29 @@ class HomeScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontFamily: 'KumbhSans',
                       fontWeight: FontWeight.bold,
-                      fontSize: 28,
+                      fontSize: 24,
                       color: Color(0xFFD7E0FF),
                     ),
                   ),
                   SizedBox(height: 50),
                   Container(
-                    height: AppButtonStyles.rowHeight,
-                    constraints:
-                        BoxConstraints(minWidth: AppButtonStyles.rowMinWidth),
+                    width: isMobile ? 327 : null,
+                    height: isMobile ? 63 : null,
+                    constraints: isMobile
+                        ? null
+                        : BoxConstraints(minWidth: AppButtonStyles.rowMinWidth),
                     decoration: BoxDecoration(
                       color: AppColors.darkBackground,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 3.0, horizontal: 10.0),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 3.0, horizontal: isMobile ? 0 : 10.0),
                     child: ToggleButtons(
                       renderBorder: false,
                       children: [
                         Container(
-                          width: AppButtonStyles.buttonWidth,
-                          height: AppButtonStyles.buttonHeight,
+                          width: isMobile ? 106 : AppButtonStyles.buttonWidth,
+                          height: isMobile ? 48 : AppButtonStyles.buttonHeight,
                           decoration: BoxDecoration(
                             color: selectedTimer == TimerType.pomodoro
                                 ? Theme.of(context).colorScheme.secondary
@@ -84,11 +88,12 @@ class HomeScreen extends ConsumerWidget {
                                     : Color(0xFFD7E0FF).withOpacity(.45),
                                 fontFamily: fontFamily,
                                 fontWeight: FontWeight.bold,
+                                fontSize: isMobile ? 11 : 14,
                               )),
                         ),
                         Container(
-                          width: AppButtonStyles.buttonWidth,
-                          height: AppButtonStyles.buttonHeight,
+                          width: isMobile ? 106 : AppButtonStyles.buttonWidth,
+                          height: isMobile ? 48 : AppButtonStyles.buttonHeight,
                           decoration: BoxDecoration(
                             color: selectedTimer == TimerType.shortBreak
                                 ? Theme.of(context).colorScheme.secondary
@@ -103,11 +108,12 @@ class HomeScreen extends ConsumerWidget {
                                     : Color(0xFFD7E0FF).withOpacity(.45),
                                 fontFamily: fontFamily,
                                 fontWeight: FontWeight.bold,
+                                fontSize: isMobile ? 11 : 14,
                               )),
                         ),
                         Container(
-                          width: AppButtonStyles.buttonWidth,
-                          height: AppButtonStyles.buttonHeight,
+                          width: isMobile ? 106 : AppButtonStyles.buttonWidth,
+                          height: isMobile ? 48 : AppButtonStyles.buttonHeight,
                           decoration: BoxDecoration(
                             color: selectedTimer == TimerType.longBreak
                                 ? Theme.of(context).colorScheme.secondary
@@ -122,6 +128,7 @@ class HomeScreen extends ConsumerWidget {
                                     : Color(0xFFD7E0FF).withOpacity(.45),
                                 fontFamily: fontFamily,
                                 fontWeight: FontWeight.bold,
+                                fontSize: isMobile ? 11 : 14,
                               )),
                         ),
                       ],
@@ -160,14 +167,14 @@ class HomeScreen extends ConsumerWidget {
                 }
               },
               child: Container(
-                width: 410,
-                height: 410,
+                width: isMobile ? 300 : 410,
+                height: isMobile ? 300 : 410,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
                     Container(
-                      width: 410,
-                      height: 410,
+                      width: isMobile ? 300 : 410,
+                      height: isMobile ? 300 : 410,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: LinearGradient(
@@ -193,8 +200,8 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                     Container(
-                      width: 366,
-                      height: 366,
+                      width: isMobile ? 268 : 366,
+                      height: isMobile ? 268 : 366,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.darkBackground,
@@ -213,8 +220,8 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                     SizedBox(
-                      width: 339,
-                      height: 339,
+                      width: isMobile ? 248 : 339,
+                      height: isMobile ? 248 : 339,
                       child: CircularProgressIndicator(
                         value: (timerState.time /
                                 (selectedTimer == TimerType.pomodoro
@@ -223,7 +230,7 @@ class HomeScreen extends ConsumerWidget {
                                         ? timerNotifier.shortBreakDuration
                                         : timerNotifier.longBreakDuration)) /
                             60,
-                        strokeWidth: 10,
+                        strokeWidth: isMobile ? 8 : 10,
                         color: currentTheme.colorScheme.secondary,
                       ),
                     ),
@@ -233,7 +240,7 @@ class HomeScreen extends ConsumerWidget {
                         Text(
                           '${(timerState.time / 60).floor().toString().padLeft(2, '0')}:${(timerState.time % 60).toString().padLeft(2, '0')}',
                           style: TextStyle(
-                              fontSize: 100,
+                              fontSize: isMobile ? 80 : 100,
                               fontFamily: fontFamily,
                               color: Color(0xFFD7E0FF),
                               fontWeight: FontWeight.bold,
@@ -244,7 +251,7 @@ class HomeScreen extends ConsumerWidget {
                         Text(
                           getButtonText(),
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: isMobile ? 15 : 16,
                               fontFamily: fontFamily,
                               color: Color(0xFFD7E0FF),
                               fontWeight: FontWeight.bold,
@@ -259,7 +266,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 80.0),
+              padding: EdgeInsets.only(bottom: isMobile ? 40 : 80.0),
               child: IconButton(
                 icon: Icon(Icons.settings,
                     color: Color(0xFFD7E0FF).withOpacity(.45), size: 34),
